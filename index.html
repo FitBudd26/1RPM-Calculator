@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>One Rep Max Calculator | Free 1RM Calculator for Coaches — FitBudd</title>
+  <meta name="description" content="Calculate your one rep max instantly with our free One Rep Max Calculator. Compare results across 6 proven strength formulas. Get training load percentages for programming.">
+  <meta property="og:title" content="One Rep Max Calculator — Free 1RM Calculator for Coaches">
+  <meta property="og:description" content="Estimate your one-rep max using 6 proven formulas. Get a training percentage chart for strength programming.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="TODO: Set your canonical URL here">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange:        #FF6B2C;
+      --orange-hover:  #E55A1B;
+      --orange-light:  #FFF4EE;
+      --orange-border: #FFD4BC;
+      --text-primary:  #1A1D23;
+      --text-secondary:#4A5568;
+      --text-muted:    #9CA3AF;
+      --border:        #E5E7EB;
+      --input-bg:      #F9FAFB;
+      --white:         #FFFFFF;
+      --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+    }
+
+    html { font-size: 16px; }
+
+    body {
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--text-primary);
+      background: #F5F5F5;
+      padding: 16px 16px 48px;
+    }
+
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0;
+      margin: -1px; overflow: hidden; clip: rect(0,0,0,0);
+      white-space: nowrap; border: 0;
+    }
+
+    /* ── Tool Container ── */
+    .tool-container {
+      max-width: 680px;
+      margin: 0 auto;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--orange);
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+
+    .tool-inner { padding: 18px; }
+
+    /* ── Steps ── */
+    #step-1, #step-2 { width: 100%; }
+
+    /* ── Header ── */
+    .tool-header { margin-bottom: 14px; }
+
+    .header-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .header-top h1 {
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--text-primary);
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* ── Divider ── */
+    .divider { height: 1px; background: var(--border); margin: 14px 0; }
+
+    /* ── Inputs Grid ── */
+    .inputs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .input-group { display: flex; flex-direction: column; }
+
+    .input-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+    }
+
+    /* ── Select ── */
+    select {
+      width: 100%;
+      height: 48px;
+      padding: 0 36px 0 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      background-color: var(--input-bg);
+      background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%239CA3AF' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      appearance: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-primary);
+      cursor: pointer;
+    }
+
+    select:focus {
+      outline: 2px solid var(--orange);
+      outline-offset: 2px;
+      border-color: var(--orange);
+    }
+
+    /* ── Weight Input ── */
+    .weight-input-wrapper { display: flex; gap: 8px; align-items: stretch; }
+
+    .weight-input-field {
+      flex: 1;
+      min-width: 0;
+      height: 48px;
+      padding: 0 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      background: var(--input-bg);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .weight-input-field::placeholder {
+      color: var(--text-muted);
+      font-weight: 400;
+      font-size: 18px;
+    }
+
+    .weight-input-field:focus {
+      outline: 2px solid var(--orange);
+      outline-offset: 2px;
+      border-color: var(--orange);
+    }
+
+    .weight-input-field::-webkit-inner-spin-button,
+    .weight-input-field::-webkit-outer-spin-button { -webkit-appearance: none; }
+    .weight-input-field[type=number] { -moz-appearance: textfield; }
+
+    /* ── Unit Toggle ── */
+    .unit-toggle {
+      display: flex;
+      gap: 2px;
+      background: var(--input-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 4px;
+      height: 48px;
+      flex-shrink: 0;
+    }
+
+    .unit-btn {
+      height: 100%;
+      padding: 0 10px;
+      border: none;
+      border-radius: 6px;
+      background: transparent;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: background-color 200ms ease, color 200ms ease;
+      white-space: nowrap;
+    }
+
+    .unit-btn:hover:not(.active) { background: var(--orange-light); color: var(--orange); }
+    .unit-btn.active { background: var(--orange); color: var(--white); }
+    .unit-btn:focus { outline: 2px solid var(--orange); outline-offset: 2px; }
+
+    /* ── Rep Pills ── */
+    .rep-pills-label-row { margin-bottom: 14px; }
+
+    .rep-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .rep-pill {
+      min-width: 38px;
+      height: 38px;
+      padding: 0 4px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      background: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-primary);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+      flex-shrink: 0;
+    }
+
+    .rep-pill:hover:not(.selected) {
+      background: var(--orange-light);
+      border-color: var(--orange-border);
+      color: var(--orange);
+    }
+
+    .rep-pill.selected { background: var(--orange); border-color: var(--orange); color: var(--white); }
+    .rep-pill:focus { outline: 2px solid var(--orange); outline-offset: 2px; }
+
+    /* ── Calculate Button ── */
+    .calculate-btn {
+      width: 100%;
+      height: 44px;
+      background: var(--orange);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 200ms ease, box-shadow 200ms ease, transform 100ms ease;
+    }
+
+    .calculate-btn:hover:not(:disabled) {
+      background: var(--orange-hover);
+      box-shadow: 0 4px 12px rgba(255,107,44,0.3);
+    }
+
+    .calculate-btn:active:not(:disabled) { transform: scale(0.98); }
+    .calculate-btn:disabled { background: #D1D5DB; cursor: not-allowed; }
+    .calculate-btn:focus { outline: 2px solid var(--orange); outline-offset: 2px; }
+
+    /* ══════════════════════════════════════════════
+       STEP 2: Results page
+    ══════════════════════════════════════════════ */
+
+    /* Back nav */
+    .step2-nav { margin-bottom: 14px; }
+
+    .back-btn {
+      background: none;
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: color 150ms ease;
+    }
+
+    .back-btn:hover { color: var(--text-secondary); }
+    .back-btn:focus { outline: 2px solid var(--orange); outline-offset: 2px; border-radius: 4px; }
+
+    /* ── Primary Result ── */
+    .primary-result {
+      text-align: center;
+      padding: 18px 16px 14px;
+      background: var(--orange-light);
+      border-radius: 10px;
+      margin-bottom: 12px;
+    }
+
+    .result-exercise-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .already-max-msg {
+      font-size: 15px;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      font-style: italic;
+    }
+
+    .result-1rm-display {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .result-1rm-value {
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--orange);
+      display: inline-block;
+    }
+
+    .result-1rm-unit {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--orange);
+      display: inline-block;
+    }
+
+    .result-formula-label { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+    /* ── Accuracy Note ── */
+    .accuracy-note {
+      display: none;
+      font-size: 12px;
+      color: var(--text-muted);
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 10px;
+      margin-bottom: 10px;
+    }
+
+    /* ── Formula Comparison ── */
+    .formula-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--orange);
+      cursor: pointer;
+      padding: 0;
+      margin-bottom: 10px;
+    }
+
+    .formula-toggle-btn:focus { outline: 2px solid var(--orange); outline-offset: 2px; border-radius: 4px; }
+
+    .toggle-arrow { font-size: 11px; display: inline-block; transition: transform 250ms ease; }
+    .formula-toggle-btn[aria-expanded="true"] .toggle-arrow { transform: rotate(180deg); }
+
+    .formula-content { max-height: 0; overflow: hidden; transition: max-height 300ms ease; }
+    .formula-content.expanded { max-height: 480px; }
+
+    /* ── Data Table ── */
+    .data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+
+    .data-table th {
+      text-align: left;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .data-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text-secondary); }
+    .data-table tbody tr:last-child td { border-bottom: none; }
+    .data-table tbody tr:nth-child(even) td { background: var(--input-bg); }
+
+    .row-average td {
+      font-weight: 700;
+      color: var(--text-primary);
+      border-top: 2px solid var(--border) !important;
+      background: var(--white) !important;
+    }
+
+    .badge-high {
+      display: inline-block;
+      font-size: 11px;
+      color: #059669;
+      background: #D1FAE5;
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-left: 6px;
+      font-weight: 500;
+    }
+
+    .badge-low {
+      display: inline-block;
+      font-size: 11px;
+      color: #6B7280;
+      background: #F3F4F6;
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-left: 6px;
+      font-weight: 500;
+    }
+
+    /* ── Training Load Chart ── */
+    .training-chart-section { margin-bottom: 0; }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+
+    /* Preview wrapper clips the chart when locked */
+    .chart-preview-wrapper {
+      position: relative;
+      transition: max-height 600ms ease;
+    }
+
+    .chart-table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+    .chart-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+
+    .chart-table th {
+      text-align: left;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    .chart-table td {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    .chart-table tbody tr:last-child td { border-bottom: none; }
+    .chart-table tbody tr:nth-child(even) td { background: var(--input-bg); }
+
+    .chart-table .row-100 td {
+      background: var(--orange-light) !important;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .chart-table .row-100 td:first-child { border-left: 3px solid var(--orange); }
+    .chart-table .row-key td { font-weight: 600; color: var(--text-primary); }
+
+    /* Gradient fade over clipped chart */
+    .chart-fade {
+      display: none;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 80px;
+      background: linear-gradient(transparent, white);
+      pointer-events: none;
+    }
+
+    /* ══════════════════════════════════════════════
+       BLUR GATE: Applied via #step-2.locked
+    ══════════════════════════════════════════════ */
+
+    .blur-target {
+      transition: filter 500ms ease;
+    }
+
+    #step-2.locked .blur-target {
+      filter: blur(7px);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    #step-2.locked .chart-preview-wrapper {
+      max-height: 160px;
+      overflow: hidden;
+    }
+
+    #step-2.locked .chart-fade {
+      display: block;
+    }
+
+    /* ── Email Gate ── */
+    .email-gate {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      margin-top: 14px;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      transition: opacity 300ms ease;
+    }
+
+    .gate-icon { margin-bottom: 10px; }
+
+    .gate-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .gate-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .email-form-row { display: flex; gap: 8px; }
+
+    .email-input {
+      flex: 1;
+      min-width: 0;
+      height: 44px;
+      padding: 0 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      background: var(--input-bg);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      color: var(--text-primary);
+    }
+
+    .email-input::placeholder { color: var(--text-muted); }
+
+    .email-input:focus {
+      outline: 2px solid var(--orange);
+      outline-offset: 2px;
+      border-color: var(--orange);
+    }
+
+    .email-submit-btn {
+      height: 44px;
+      padding: 0 16px;
+      background: var(--orange);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background-color 200ms ease;
+    }
+
+    .email-submit-btn:hover:not(:disabled) { background: var(--orange-hover); }
+    .email-submit-btn:disabled { background: #D1D5DB; cursor: not-allowed; }
+    .email-submit-btn:focus { outline: 2px solid var(--orange); outline-offset: 2px; }
+
+    .email-error {
+      display: none;
+      font-size: 13px;
+      color: #DC2626;
+      margin-top: 8px;
+    }
+
+    .retry-btn {
+      background: none;
+      border: none;
+      color: #DC2626;
+      font-family: 'DM Sans', sans-serif;
+      font-size: inherit;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 0;
+    }
+
+    .success-msg {
+      font-size: 14px;
+      font-weight: 500;
+      color: #059669;
+      padding: 8px 0;
+    }
+
+    /* ── FitBudd CTA ── */
+    .fitbudd-cta {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 400ms ease;
+    }
+
+    .fitbudd-cta.visible { opacity: 1; }
+
+    .cta-headline {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .cta-body {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background: var(--orange);
+      color: var(--white);
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background-color 200ms ease, box-shadow 200ms ease;
+    }
+
+    .cta-btn:hover { background: var(--orange-hover); box-shadow: 0 4px 12px rgba(255,107,44,0.25); }
+    .cta-btn:focus { outline: 2px solid var(--orange); outline-offset: 2px; }
+
+    /* ── Powered By ── */
+    .powered-by { text-align: center; padding: 4px 0 2px; }
+
+    .powered-by a { font-size: 12px; color: var(--text-muted); text-decoration: none; }
+    .powered-by a:hover { color: var(--text-secondary); }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      body { padding: 0 0 48px; }
+
+      .tool-container { border-radius: 0; border-left: none; border-right: none; }
+      .tool-inner { padding: 14px; }
+      .header-top h1 { font-size: 20px; }
+      .inputs-grid { grid-template-columns: 1fr; gap: 10px; }
+      .result-1rm-value { font-size: 40px; }
+
+      .email-form-row { flex-direction: column; }
+      .email-submit-btn { width: 100%; }
+    }
+
+    @media (max-width: 380px) { .reps-col { display: none; } }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="tool-container">
+      <div class="tool-inner">
+
+        <!-- ══════════════════════════════════
+             STEP 1: Calculator
+        ══════════════════════════════════ -->
+        <div id="step-1">
+
+          <header class="tool-header">
+            <div class="header-top">
+              <svg width="24" height="24" viewBox="0 0 32 32" fill="none" aria-hidden="true" focusable="false">
+                <rect x="1" y="11" width="5" height="10" rx="2.5" fill="#FF6B2C"/>
+                <rect x="5" y="13" width="3" height="6" rx="1" fill="#E55A1B"/>
+                <rect x="8" y="14" width="16" height="4" rx="2" fill="#FF6B2C"/>
+                <rect x="24" y="13" width="3" height="6" rx="1" fill="#E55A1B"/>
+                <rect x="26" y="11" width="5" height="10" rx="2.5" fill="#FF6B2C"/>
+              </svg>
+              <h1>One Rep Max Calculator</h1>
+            </div>
+            <p class="subtitle">For coaches. Calculate client 1RMs and generate training load charts instantly.</p>
+          </header>
+
+          <div class="divider"></div>
+
+          <section aria-label="Calculator inputs">
+
+            <div class="inputs-grid">
+
+              <div class="input-group">
+                <label class="input-label" for="exercise-select">Exercise</label>
+                <select id="exercise-select" name="exercise">
+                  <option value="Bench Press" selected>Bench Press</option>
+                  <option value="Squat">Squat</option>
+                  <option value="Deadlift">Deadlift</option>
+                  <option value="Overhead Press">Overhead Press</option>
+                  <option value="Barbell Row">Barbell Row</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <div class="input-group">
+                <label class="input-label" for="weight-input">Weight Lifted</label>
+                <div class="weight-input-wrapper">
+                  <input
+                    type="number"
+                    id="weight-input"
+                    class="weight-input-field"
+                    placeholder="225"
+                    min="1"
+                    max="9999"
+                    step="1"
+                    autocomplete="off"
+                    inputmode="numeric"
+                    aria-label="Weight lifted"
+                  >
+                  <div class="unit-toggle" id="unit-toggle" role="radiogroup" aria-label="Weight unit">
+                    <button class="unit-btn active" data-unit="lbs" role="radio" aria-checked="true"  tabindex="0">lbs</button>
+                    <button class="unit-btn"        data-unit="kg"  role="radio" aria-checked="false" tabindex="-1">kg</button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="rep-pills-label-row">
+              <span class="input-label" id="rep-pills-label">Reps Completed</span>
+              <div class="rep-pills" id="rep-pills" role="radiogroup" aria-labelledby="rep-pills-label">
+                <!-- injected by JS -->
+              </div>
+            </div>
+
+          </section>
+
+          <button id="calculate-btn" class="calculate-btn" disabled aria-label="Calculate my one rep max">
+            Calculate My 1RM
+          </button>
+
+        </div><!-- #step-1 -->
+
+
+        <!-- ══════════════════════════════════
+             STEP 2: Results (hidden initially)
+        ══════════════════════════════════ -->
+        <div id="step-2" class="locked" style="display:none;" aria-live="polite">
+
+          <!-- Back nav -->
+          <div class="step2-nav">
+            <button id="back-btn" class="back-btn">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Recalculate
+            </button>
+          </div>
+
+          <!-- Primary result (exercise label is clear; number is blurred) -->
+          <div class="primary-result">
+            <div class="result-exercise-label" id="result-exercise">Bench Press</div>
+            <p id="already-max-msg" class="already-max-msg" style="display:none;">
+              That's already your one rep max. Solid lift.
+            </p>
+            <div class="result-1rm-display">
+              <span class="result-1rm-value" id="result-1rm">263</span>
+              <span class="result-1rm-unit" id="result-unit">lbs</span>
+            </div>
+            <div class="result-formula-label" id="result-formula-label">Estimated One Rep Max (Epley)</div>
+          </div>
+
+          <!-- Accuracy note -->
+          <div class="accuracy-note blur-target" id="accuracy-note" role="note">
+            Note: Estimates are most accurate between 2 and 10 reps.
+          </div>
+
+          <!-- Formula comparison (blurred) -->
+          <div id="formula-section" style="margin-bottom:10px;">
+            <button
+              class="formula-toggle-btn blur-target"
+              id="formula-toggle"
+              aria-expanded="false"
+              aria-controls="formula-content"
+            >
+              Compare across 6 formulas
+              <span class="toggle-arrow" aria-hidden="true">&#9662;</span>
+            </button>
+            <div class="formula-content blur-target" id="formula-content" role="region" aria-label="Formula comparison">
+              <table class="data-table" aria-label="1RM estimates across all formulas">
+                <thead>
+                  <tr>
+                    <th scope="col">Formula</th>
+                    <th scope="col">Estimated 1RM</th>
+                  </tr>
+                </thead>
+                <tbody id="formula-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="divider blur-target"></div>
+
+          <!-- Training load chart (clipped + blurred when locked) -->
+          <div class="training-chart-section">
+            <h2 class="section-title">Training Load Chart</h2>
+            <div class="chart-preview-wrapper">
+              <div class="chart-table-wrapper blur-target">
+                <table class="chart-table" aria-label="Training load percentages based on your 1RM">
+                  <thead>
+                    <tr>
+                      <th scope="col">% of 1RM</th>
+                      <th scope="col">Weight</th>
+                      <th scope="col" class="reps-col">Reps</th>
+                      <th scope="col">Zone</th>
+                    </tr>
+                  </thead>
+                  <tbody id="chart-tbody"></tbody>
+                </table>
+              </div>
+              <div class="chart-fade"></div>
+            </div>
+          </div>
+
+          <!-- Email gate (shown when locked) -->
+          <div class="email-gate" id="email-gate">
+            <div class="gate-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="5" y="11" width="14" height="10" rx="2" stroke="#FF6B2C" stroke-width="2"/>
+                <path d="M8 11V7a4 4 0 0 1 8 0v4" stroke="#FF6B2C" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <p class="gate-title">Unlock your training load chart</p>
+            <p class="gate-desc">Enter your email to see the full breakdown.</p>
+            <div id="email-form-container">
+              <form class="email-form-row" id="email-form" novalidate>
+                <label for="email-input" class="sr-only">Email address</label>
+                <input
+                  type="email"
+                  id="email-input"
+                  class="email-input"
+                  placeholder="client@email.com"
+                  autocomplete="email"
+                  required
+                >
+                <button type="submit" id="email-submit-btn" class="email-submit-btn">
+                  Unlock
+                </button>
+              </form>
+              <p class="email-error" id="email-error" role="alert">
+                Something went wrong.
+                <button type="button" class="retry-btn" id="retry-btn">Try again?</button>
+              </p>
+            </div>
+          </div>
+
+          <!-- FitBudd CTA (hidden until email submitted) -->
+          <div id="fitbudd-cta" class="fitbudd-cta" style="display:none;">
+            <p class="cta-headline">Run this for every client, inside your own app.</p>
+            <p class="cta-body">FitBudd gives coaches a branded fitness app: programming, check-ins, payments. Zero commission.</p>
+            <a
+              href="https://www.fitbudd.com/your-brand-awaits-your-app-self-sign-up?utm_source=ai_tool&utm_medium=lead_magnet&utm_campaign=1rm_calculator&utm_content=bottom_cta"
+              class="cta-btn"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Start Your Free Trial
+            </a>
+          </div>
+
+          <div class="powered-by">
+            <a
+              href="https://www.fitbudd.com?utm_source=ai_tool&utm_medium=lead_magnet&utm_campaign=1rm_calculator&utm_content=powered_by"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Powered by FitBudd
+            </a>
+          </div>
+
+        </div><!-- #step-2 -->
+
+      </div><!-- .tool-inner -->
+    </div><!-- .tool-container -->
+  </main>
+
+  <!--
+    TODO: postMessage auto-height for iframe embedding.
+    function sendHeight() {
+      window.parent.postMessage({ type: 'iframeHeight', height: document.body.scrollHeight }, '*');
+    }
+    document.addEventListener('DOMContentLoaded', sendHeight);
+    // Call sendHeight() again inside goToStep2() after rendering.
+  -->
+
+  <script>
+    // ============================================================
+    // TODO: Replace with your actual HubSpot IDs before going live.
+    // Portal ID:  HubSpot > Settings > Account Setup > Account > Hub ID
+    // Form GUID:  HubSpot > Marketing > Forms > open form > ID from URL
+    // ============================================================
+    const HUBSPOT_PORTAL_ID = 'YOUR_PORTAL_ID';
+    const HUBSPOT_FORM_GUID = 'YOUR_FORM_GUID';
+
+    // ── State ────────────────────────────────────────────────────
+    let selectedReps    = null;
+    let selectedUnit    = 'lbs';
+    let calcResults     = null;
+    let emailSubmitted  = false;   // skip gate on subsequent recalculates
+
+    // ── Constants ────────────────────────────────────────────────
+    const REP_VALUES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 15];
+
+    const TRAINING_ZONES = [
+      { pct: 100, reps: '1',     zone: 'Max Effort',             rowClass: 'row-100' },
+      { pct: 95,  reps: '1-2',   zone: 'Strength: Peak',         rowClass: '' },
+      { pct: 90,  reps: '3-4',   zone: 'Strength: Heavy',        rowClass: '' },
+      { pct: 85,  reps: '4-6',   zone: 'Strength / Hypertrophy', rowClass: 'row-key' },
+      { pct: 80,  reps: '6-8',   zone: 'Hypertrophy: Heavy',     rowClass: '' },
+      { pct: 75,  reps: '8-10',  zone: 'Hypertrophy: Moderate',  rowClass: 'row-key' },
+      { pct: 70,  reps: '10-12', zone: 'Hypertrophy: Light',     rowClass: '' },
+      { pct: 65,  reps: '12-15', zone: 'Endurance',              rowClass: '' },
+      { pct: 60,  reps: '15-20', zone: 'Endurance / Warm-up',    rowClass: '' },
+      { pct: 50,  reps: '20+',   zone: 'Warm-up / Recovery',     rowClass: '' },
+    ];
+
+    // ── UTM params ───────────────────────────────────────────────
+    function getUTMFields() {
+      const params = new URLSearchParams(window.location.search);
+      return ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content']
+        .filter(k => params.get(k))
+        .map(k => ({ name: k, value: params.get(k) }));
+    }
+
+    // ── 1RM Formulas ─────────────────────────────────────────────
+    function calculate1RM(weight, reps) {
+      if (reps === 1) {
+        return { epley: weight, brzycki: weight, lombardi: weight,
+                 mayhew: weight, oconner: weight,  wathan: weight };
+      }
+      return {
+        epley:    Math.round(weight * (1 + reps / 30)),
+        brzycki:  Math.round(weight * 36 / (37 - reps)),
+        lombardi: Math.round(weight * Math.pow(reps, 0.10)),
+        mayhew:   Math.round(100 * weight / (52.2 + 41.9 * Math.exp(-0.055 * reps))),
+        oconner:  Math.round(weight * (1 + reps / 40)),
+        wathan:   Math.round(100 * weight / (48.8 + 53.8 * Math.exp(-0.075 * reps)))
+      };
+    }
+
+    // ── Render rep pills ─────────────────────────────────────────
+    function renderRepPills() {
+      const container = document.getElementById('rep-pills');
+      REP_VALUES.forEach((reps, idx) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'rep-pill';
+        btn.dataset.reps = reps;
+        btn.textContent = reps;
+        btn.setAttribute('role', 'radio');
+        btn.setAttribute('aria-checked', 'false');
+        btn.setAttribute('tabindex', idx === 0 ? '0' : '-1');
+        btn.addEventListener('click', () => selectRep(reps));
+        container.appendChild(btn);
+      });
+    }
+
+    // ── Select rep ───────────────────────────────────────────────
+    function selectRep(reps) {
+      selectedReps = reps;
+      document.querySelectorAll('.rep-pill').forEach(pill => {
+        const active = parseInt(pill.dataset.reps) === reps;
+        pill.classList.toggle('selected', active);
+        pill.setAttribute('aria-checked', String(active));
+        pill.setAttribute('tabindex', active ? '0' : '-1');
+      });
+      updateButtonState();
+    }
+
+    // ── Select unit ──────────────────────────────────────────────
+    function selectUnit(unit) {
+      selectedUnit = unit;
+      document.querySelectorAll('.unit-btn').forEach(btn => {
+        const active = btn.dataset.unit === unit;
+        btn.classList.toggle('active', active);
+        btn.setAttribute('aria-checked', String(active));
+        btn.setAttribute('tabindex', active ? '0' : '-1');
+      });
+      if (calcResults !== null) handleCalculate();
+    }
+
+    // ── Button state ─────────────────────────────────────────────
+    function updateButtonState() {
+      const weight = parseFloat(document.getElementById('weight-input').value);
+      document.getElementById('calculate-btn').disabled =
+        !(weight > 0 && selectedReps !== null);
+    }
+
+    // ── Go to step 2 ─────────────────────────────────────────────
+    function goToStep2(locked) {
+      document.getElementById('step-1').style.display = 'none';
+      const s2 = document.getElementById('step-2');
+      s2.style.display = 'block';
+
+      if (locked) {
+        s2.classList.add('locked');
+        document.getElementById('email-gate').style.display   = 'block';
+        document.getElementById('email-gate').style.opacity   = '1';
+        document.getElementById('fitbudd-cta').style.display  = 'none';
+        document.getElementById('fitbudd-cta').classList.remove('visible');
+      } else {
+        s2.classList.remove('locked');
+        document.getElementById('email-gate').style.display  = 'none';
+        document.getElementById('fitbudd-cta').style.display = 'block';
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          document.getElementById('fitbudd-cta').classList.add('visible');
+        }));
+      }
+
+      // Scroll tool to top
+      document.querySelector('.tool-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ── Main calculate handler ────────────────────────────────────
+    function handleCalculate() {
+      const weight   = parseFloat(document.getElementById('weight-input').value);
+      const exercise = document.getElementById('exercise-select').value;
+      if (!weight || weight <= 0 || selectedReps === null) return;
+
+      const results = calculate1RM(weight, selectedReps);
+      calcResults = results;
+
+      const primary = results.epley;
+      const vals    = Object.values(results);
+      const average = Math.round(vals.reduce((a, b) => a + b, 0) / vals.length);
+      const maxVal  = Math.max(...vals);
+      const minVal  = Math.min(...vals);
+
+      // Update result display
+      document.getElementById('result-exercise').textContent = exercise;
+      document.getElementById('result-1rm').textContent      = primary;
+      document.getElementById('result-unit').textContent     = selectedUnit;
+
+      // Reps = 1 special case
+      const alreadyMsg   = document.getElementById('already-max-msg');
+      const formulaSec   = document.getElementById('formula-section');
+      const formulaLabel = document.getElementById('result-formula-label');
+      const isAlreadyMax = selectedReps === 1;
+
+      alreadyMsg.style.display   = isAlreadyMax ? 'block' : 'none';
+      formulaSec.style.display   = isAlreadyMax ? 'none'  : 'block';
+      formulaLabel.style.display = isAlreadyMax ? 'none'  : 'block';
+
+      // Accuracy note
+      document.getElementById('accuracy-note').style.display =
+        selectedReps > 12 ? 'block' : 'none';
+
+      // Render tables
+      renderFormulaTable(results, average, maxVal, minVal);
+      renderTrainingChart(primary, selectedUnit);
+
+      // Step 1 > Step 2 transition
+      // For reps=1, skip the gate (result is just their input weight, no mystery)
+      const shouldLock = !isAlreadyMax && !emailSubmitted;
+      goToStep2(shouldLock);
+    }
+
+    // ── Render formula table ──────────────────────────────────────
+    function renderFormulaTable(results, average, maxVal, minVal) {
+      const names = {
+        epley: 'Epley', brzycki: 'Brzycki', lombardi: 'Lombardi',
+        mayhew: 'Mayhew', oconner: "O'Conner", wathan: 'Wathan'
+      };
+
+      const tbody      = document.getElementById('formula-tbody');
+      tbody.innerHTML  = '';
+      const showBadges = selectedReps !== 1;
+
+      Object.entries(results).forEach(([key, val]) => {
+        const tr     = document.createElement('tr');
+        const nameTd = document.createElement('td');
+        const valTd  = document.createElement('td');
+        nameTd.textContent = names[key];
+        valTd.textContent  = `${val} ${selectedUnit}`;
+
+        if (showBadges && val === maxVal) {
+          const b = document.createElement('span');
+          b.className = 'badge-high'; b.textContent = 'Highest';
+          valTd.appendChild(b);
+        } else if (showBadges && val === minVal) {
+          const b = document.createElement('span');
+          b.className = 'badge-low'; b.textContent = 'Lowest';
+          valTd.appendChild(b);
+        }
+
+        tr.appendChild(nameTd); tr.appendChild(valTd);
+        tbody.appendChild(tr);
+      });
+
+      const avgRow = document.createElement('tr');
+      avgRow.className = 'row-average';
+      avgRow.innerHTML = `<td><strong>Average</strong></td><td><strong>${average} ${selectedUnit}</strong></td>`;
+      tbody.appendChild(avgRow);
+    }
+
+    // ── Render training chart ─────────────────────────────────────
+    function renderTrainingChart(oneRM, unit) {
+      const tbody = document.getElementById('chart-tbody');
+      tbody.innerHTML = '';
+
+      TRAINING_ZONES.forEach(({ pct, reps, zone, rowClass }) => {
+        const weight = Math.round(oneRM * pct / 100);
+        const tr = document.createElement('tr');
+        if (rowClass) tr.className = rowClass;
+        tr.innerHTML = `
+          <td>${pct}%</td>
+          <td>${weight} ${unit}</td>
+          <td class="reps-col">${reps}</td>
+          <td>${zone}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // ── Formula toggle ────────────────────────────────────────────
+    function toggleFormulas() {
+      const content = document.getElementById('formula-content');
+      const toggle  = document.getElementById('formula-toggle');
+      const isOpen  = content.classList.contains('expanded');
+      content.classList.toggle('expanded', !isOpen);
+      toggle.setAttribute('aria-expanded', String(!isOpen));
+    }
+
+    // ── Unlock results after email ────────────────────────────────
+    function unlockResults() {
+      emailSubmitted = true;
+      const s2    = document.getElementById('step-2');
+      const gate  = document.getElementById('email-gate');
+      const cta   = document.getElementById('fitbudd-cta');
+
+      // Fade gate out, then hide
+      gate.style.opacity    = '0';
+      setTimeout(() => { gate.style.display = 'none'; }, 300);
+
+      // Remove blur
+      s2.classList.remove('locked');
+
+      // Show CTA with fade
+      cta.style.display = 'block';
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        cta.classList.add('visible');
+      }));
+    }
+
+    // ── HubSpot submission ────────────────────────────────────────
+    async function handleEmailSubmit(e) {
+      e.preventDefault();
+
+      const emailInput = document.getElementById('email-input');
+      const submitBtn  = document.getElementById('email-submit-btn');
+      const errorEl    = document.getElementById('email-error');
+      const email      = emailInput.value.trim();
+
+      if (!email || !email.includes('@')) { emailInput.focus(); return; }
+
+      submitBtn.disabled    = true;
+      submitBtn.textContent = 'Unlocking...';
+
+      // Unlock immediately — don't make user wait on network
+      document.getElementById('email-form-container').innerHTML =
+        '<p class="success-msg" role="status">Unlocked. Enjoy your results.</p>';
+      unlockResults();
+
+      // Fire HubSpot silently in background
+      const exercise = document.getElementById('exercise-select').value;
+      const fields = [
+        { name: 'email',                 value: email },
+        { name: 'calculator_exercise',   value: exercise },
+        { name: 'calculator_1rm_result', value: calcResults ? String(calcResults.epley) : '' },
+        { name: 'calculator_unit',       value: selectedUnit },
+        { name: 'lead_source',           value: '1rm_calculator' },
+        ...getUTMFields()
+      ];
+      fetch(
+        `https://api.hsforms.com/submissions/v3/integration/submit/${HUBSPOT_PORTAL_ID}/${HUBSPOT_FORM_GUID}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            fields,
+            context: { pageUri: window.location.href, pageName: 'One Rep Max Calculator' }
+          })
+        }
+      ).catch(err => console.error('HubSpot error:', err));
+    }
+
+    // ── Keyboard nav for radiogroups ──────────────────────────────
+    function initRadioKeyNav(groupId) {
+      document.getElementById(groupId).addEventListener('keydown', e => {
+        const items   = [...document.getElementById(groupId).querySelectorAll('[role="radio"]')];
+        const current = document.activeElement;
+        const idx     = items.indexOf(current);
+        if (idx === -1) return;
+
+        let next = -1;
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); next = (idx + 1) % items.length; }
+        else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); next = (idx - 1 + items.length) % items.length; }
+        else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); current.click(); return; }
+
+        if (next !== -1) { items[next].focus(); items[next].click(); }
+      });
+    }
+
+    // ── Init ─────────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
+
+      renderRepPills();
+
+      document.querySelectorAll('.unit-btn').forEach(btn => {
+        btn.addEventListener('click', () => selectUnit(btn.dataset.unit));
+      });
+
+      document.getElementById('weight-input').addEventListener('input', updateButtonState);
+
+      document.getElementById('weight-input').addEventListener('change', () => {
+        const input = document.getElementById('weight-input');
+        const val   = parseFloat(input.value);
+        if (isNaN(val) || val <= 0) input.value = '';
+        else input.value = Math.round(val);
+        updateButtonState();
+      });
+
+      document.getElementById('calculate-btn').addEventListener('click', handleCalculate);
+      document.getElementById('formula-toggle').addEventListener('click', toggleFormulas);
+      document.getElementById('email-form').addEventListener('submit', handleEmailSubmit);
+
+      document.getElementById('retry-btn').addEventListener('click', () => {
+        document.getElementById('email-error').style.display = 'none';
+        document.getElementById('email-form').dispatchEvent(
+          new Event('submit', { bubbles: true, cancelable: true })
+        );
+      });
+
+      document.getElementById('back-btn').addEventListener('click', () => {
+        document.getElementById('step-2').style.display = 'none';
+        document.getElementById('step-1').style.display = 'block';
+      });
+
+      initRadioKeyNav('rep-pills');
+      initRadioKeyNav('unit-toggle');
+
+    });
+  </script>
+</body>
+</html>
