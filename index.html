@@ -902,8 +902,8 @@
     // Portal ID:  HubSpot > Settings > Account Setup > Account > Hub ID
     // Form GUID:  HubSpot > Marketing > Forms > open form > ID from URL
     // ============================================================
-    const HUBSPOT_PORTAL_ID = 'YOUR_PORTAL_ID';
-    const HUBSPOT_FORM_GUID = 'YOUR_FORM_GUID';
+    const HUBSPOT_PORTAL_ID = '9058640';
+    const HUBSPOT_FORM_GUID = 'beb6fd6e-06e3-4ad7-8c39-e1bb0545eae2';
 
     // ── State ────────────────────────────────────────────────────
     let selectedReps    = null;
@@ -1175,14 +1175,8 @@
       unlockResults();
 
       // Fire HubSpot silently in background
-      const exercise = document.getElementById('exercise-select').value;
       const fields = [
-        { name: 'email',                 value: email },
-        { name: 'calculator_exercise',   value: exercise },
-        { name: 'calculator_1rm_result', value: calcResults ? String(calcResults.epley) : '' },
-        { name: 'calculator_unit',       value: selectedUnit },
-        { name: 'lead_source',           value: '1rm_calculator' },
-        ...getUTMFields()
+        { name: 'email', value: email }
       ];
       fetch(
         `https://api.hsforms.com/submissions/v3/integration/submit/${HUBSPOT_PORTAL_ID}/${HUBSPOT_FORM_GUID}`,
