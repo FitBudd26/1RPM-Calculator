@@ -1188,7 +1188,10 @@
             context: { pageUri: window.location.href, pageName: 'One Rep Max Calculator' }
           })
         }
-      ).catch(err => console.error('HubSpot error:', err));
+      ).then(async res => {
+        const body = await res.text();
+        console.log('HubSpot status:', res.status, body);
+      }).catch(err => console.error('HubSpot error:', err));
     }
 
     // ── Keyboard nav for radiogroups ──────────────────────────────
