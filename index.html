@@ -1247,6 +1247,15 @@
         document.getElementById('step-1').style.display = 'block';
       });
 
+      // Reset state if browser restores page from bfcache
+      window.addEventListener('pageshow', (event) => {
+        if (event.persisted) {
+          emailSubmitted = false;
+          document.getElementById('step-2').style.display = 'none';
+          document.getElementById('step-1').style.display = 'block';
+        }
+      });
+
       initRadioKeyNav('rep-pills');
       initRadioKeyNav('unit-toggle');
 
