@@ -903,7 +903,7 @@
     // Form GUID:  HubSpot > Marketing > Forms > open form > ID from URL
     // ============================================================
     const HUBSPOT_PORTAL_ID = '9058640';
-    const HUBSPOT_FORM_GUID = '0e3e88ad-7e16-4fa6-bb46-b403f3856566';
+    const HUBSPOT_FORM_GUID = '185118b9-abb4-4332-b08e-3af075979186';
 
     // ── State ────────────────────────────────────────────────────
     let selectedReps    = null;
@@ -1158,6 +1158,7 @@
     // ── HubSpot submission ────────────────────────────────────────
     async function handleEmailSubmit(e) {
       e.preventDefault();
+      console.log('handleEmailSubmit fired');
 
       const emailInput = document.getElementById('email-input');
       const submitBtn  = document.getElementById('email-submit-btn');
