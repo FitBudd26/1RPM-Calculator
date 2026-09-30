@@ -1,3 +1,5 @@
 {
-  "cleanUrls": true
+  "redirects": [
+    { "source": "/(.*)", "destination": "https://internal-tools-hub.vercel.app/one-rep-max-calculator/", "permanent": false }
+  ]
 }
